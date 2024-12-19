@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DepthLab</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/video_comparison.js"></script>
+  <style>
+    #table-of-contents {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+    #table-of-contents ul {
+      list-style: none;
+      padding: 0;
+    }
+    #table-of-contents li a {
+      display: block;
+      padding: 5px;
+      color: #333;
+      text-decoration: none;
+    }
+    #table-of-contents li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="table-of-contents">
+    <h3 class="title is-3 has-text-weight-bold">Contents</h3>
+    <ul>
+      <li><a href="#Video">Video Introduction</a></li>
+      <li><a href="#Abstract">Abstract</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#Comparison">Comparison</a></li>
+      <li><a href="#downstream-tasks">Downstream Tasks</a></li>
+      <li><a href="#Discussion on Future Work">Discussion on Future Work</a></li>
+      <li><a href="#BibTeX">BibTeX</a></li>
+    </ul>
+  </div>
+<!-- Begin title and authors -->  
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title" style="font-size: 40px; line-height: 1.2;">DepthLab: From Partial to Complete</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://johanan528.github.io/">Zhiheng Liu</a><sup>1*</sup>,</span>
+            <span class="author-block">
+              <a href="https://felixcheng97.github.io/">Ka Leong Cheng</a><sup>2,3*</sup>,</span>
+            <span class="author-block">
+              <a href="https://github.com/qiuyu96">Qiuyu Wang</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://ffrivera0.github.io/">Shuzhe Wang</a><sup>4</sup>,</span>
+            <span class="author-block">
+              <a href="https://ken-ouyang.github.io/">Hao Ouyang</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://icetttb.github.io/">Bin Tan</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=Mo_2YsgAAAAJ&hl=zh-CN">Kai Zhu</a><sup>5</sup>,</span>
+            <span class="author-block">
+              <a href="https://shenyujun.github.io/">Yujun Shen</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://cqf.io/">Qifeng Chen</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href="http://luoping.me/">Ping Luo</a><sup>1</sup></span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>HKU</span>&ensp;
+            <span class="author-block"><sup>2</sup>HKUST</span>&ensp;
+            <span class="author-block"><sup>3</sup>Ant Group</span>&ensp;
+            <span class="author-block"><sup>4</sup>Aalto University</span>&ensp;
+            <span class="author-block"><sup>5</sup>Tongyi Lab</span>
+          </div>
+        </div>
+      </div>
+      <div class="column has-text-centered">
+        <div class="publication-links">
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="http://arxiv.org/abs/xxxx.xxxxx"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+              </span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <!-- Code Link. -->
+          <span class="link-block">
+            <a href="https://github.com/Johanan528/DepthLab"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <i class="fab fa-github"></i>
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End title and authors -->  
+
+
+<!-- Begin teaser video -->  
+<section class="hero teaser" id="Video">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-centered">
+      <div class="column is-10">
+        <div class="item g21">
+          <video poster="" id="g21" autoplay controls muted loop playsinline width="100%">
+            <source src="./static/videos/demo_compressed.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered">
+        We propose a robust <span class="dnerf">depth inpainting foundation model</span> that can be applied to various<br>
+        downstream tasks to enhance performance.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->  
+
+
+<!-- Begin paper abstract -->
+<section class="section hero is-light" id="Abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Missing values remain a common challenge for depth data across its wide range of applications, 
+            stemming from various causes like incomplete data acquisition and perspective alteration.
+            This work bridges this gap with <b>DepthLab</b>, a foundation depth inpainting model powered by image diffusion priors.
+            Our model features two notable strengths:
+            (1) it demonstrates resilience to depth-deficient regions, providing reliable completion for both continuous areas and isolated points,
+            and (2) it faithfully preserves scale consistency with the conditioned known depth when filling in missing values.
+            Drawing on these advantages, our approach proves its worth in various downstream tasks, including <i>3D scene inpainting</i>, 
+            <i>text-to-3D scene generation</i>, <i>sparse-view reconstruction with DUST3R</i>, and <i>LiDAR depth completion</i>, 
+            exceeding current solutions in both numerical performance and visual quality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Begin image carousel -->
+<section class="hero is-small" id="method">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-3">Method</h2><br>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-12">
+          <div class="item g21">
+            <img src="static/images/pipeline.jpeg" alt="DepthLab Pipeline" class="same-height" width="100%"/>
+            <h2 class="content has-text-justified">
+              We apply random masking to the ground truth depth to create the masked depth, followed by interpolation. 
+              Both the interpolated masked depth and the original depth undergo random scale normalization before being fed into the encoder. 
+              The Reference U-Net extracts RGB features, while the Estimation U-Net takes the noisy depth, masked depth, and encoded mask as input. 
+              Layer-by-layer feature fusion allows for finer-grained visual guidance, achieving high-quality depth predictions even in large or complex masked regions.
+           </h2>
+          </div>
+        </div>
+      </div>
+     </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small" id="Comparison">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-3">Comparisons</h2><br>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-12">
+          <div class="item g21">
+            <img src="static/images/comparison.jpg" alt="DepthLab Pipeline" class="same-height" width="100%"/>
+            <h2 class="content has-text-justified">
+              In the second column, black represents the known
+regions, while white indicates the predicted areas. Notably, to emphasize the contrast, we reattach the known ground truth depth to the
+corresponding positions in the right-side visualizations of the depth maps. Other methods exhibit geometric inconsistency.
+           </h2>
+          </div>
+        </div>
+      </div>
+     </div>
+    </div>
+  </div>
+</section>
+<!-- End image carousel -->
+
+<section class="hero is-small" id="downstream-tasks">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-3">Downstream Tasks</h2>
+      </div>
+<!-- Begin application 1 -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-4">3D Gaussian Inpainting</h2>
+      </div>
+      <p>In 3D scenes, we start by inpainting the depth of the image inpainted regions from the posed reference views, 
+        then unproject the points into the 3D space for optimal initialization, which significantly
+        enhances the quality and speed of the 3D scene inpainting.</p> 
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-6">
+          <div class="item g21">
+            <video poster="" id="g21" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/bear1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/bear2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-6">
+          <div class="item g21">
+            <video poster="" id="g21" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/box1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/box2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-6">
+          <div class="item g21">
+            <video poster="" id="g21" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/fence1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/fence2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-6">
+          <div class="item g21">
+            <video poster="" id="g21" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/apple1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline width="100%">
+              <source src="./static/results/task1/apple2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End application 1 -->
+
+
+<!-- Begin application 2 -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-4">Text to Scene Generation</h2>
+      </div>
+      <p>Our method substantially improves the process of generating a 3D scene from a single image by eliminating the need for alignment. 
+        This advancement effectively mitigates issues of edge disjunction that previously arose from geometric inconsistencies.</p> 
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-8">
+          <div class="item g21">
+            <img src="./static/results/task2/Slide1.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task2/llff1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-8">
+          <div class="item g21">
+            <img src="./static/results/task2/Slide2.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task2/llff2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-8">
+          <div class="item g21">
+            <img src="./static/results/task2/Slide3.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-4">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task2/llff3_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End application 2 -->
+
+
+<!-- Begin application 3 -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-4">Sparse-view Gaussian Reconstruction with DUST3R</h2>
+      </div>
+      <p>Our approach begins by generating a mask for pixels without matches from any source images. These non-matching regions are then refined through DepthLab.
+         Our approach effectively sharpens initial depth from DUST3R, substantially improving Gaussian splatting rendering quality.
+      </p> 
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-7">
+          <div class="item g21">
+            <img src="./static/results/task3/Slide1.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task3/video1_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-7">
+          <div class="item g21">
+            <img src="./static/results/task3/Slide2.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task3/video2_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="column is-7">
+          <div class="item g21">
+            <img src="./static/results/task3/Slide3.jpeg" alt="Slide2" class="same-height" />
+          </div>
+        </div>
+        <div class="column is-5">
+          <div class="item g22">
+            <video poster="" id="g22" autoplay controls muted loop playsinline class="same-height">
+              <source src="./static/results/task3/video3_compressed.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End application 3 -->
+
+
+<!-- Begin application 4 -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered mt-5">
+        <h2 class="title is-4">Sparse Depth Completion</h2>
+      </div>
+      <p>Unlike existing methods that are trained and tested on a single dataset, such as NYUv2, our approach achieves comparable 
+        results in a zero-shot setting and can deliver even better outcomes with minimal fine-tuning.
+      </p> 
+      <br>
+      <div class="columns is-vcentered is-centered">
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/rgb1.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/mask1.png" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/depth1.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/rgb2.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/mask2.png" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/depth2.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/rgb3.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/mask3.png" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/depth3.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+      </div>
+      <div class="columns is-vcentered is-centered">
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/rgb4.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/mask4.png" alt="completion" width="100%">
+          </div>
+        </div>
+        <div class="is-4">
+          <div class="item g21">
+            <img src="./static/results/task4/depth4.jpg" alt="completion" width="100%">
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+<!-- End application 4 -->
+</div>
+</div>
+</section>
+
+
+
+<section class="section hero is-light" id="Discussion on Future Work">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Discussion on Future Work</h2>
+        <div class="content has-text-justified">
+          <p>
+            First, we aim to discuss potential downstream tasks where our model could be applied, such as 4D scene generation or reconstruction, robotic navigation, editing in VR/AR, and a series of works related to DUST3R. In summary, any task requiring depth estimation that has inherent known information (either partial ground truth obtained through rendering or sensors, or warped depth from a changed camera pose) could be able to leverage our model for more accurate depth estimation, thereby enhancing the results.
+            <br>
+            <br>
+            Next, we think there are some possible further research directions:
+            <li>How to accelerate the entire estimation process, such as using LCM or Flow Matching techniques.
+            <li>Can such an idea be applied to normal estimation?
+            <li>If camera pose information is also incorporated into the model, could it potentially enhance the model's performance in scenarios related to viewpoint transformations?
+            <li>Our core idea is to use known information to achieve better depth estimation, which is even more critical in video depth estimation. 
+            This is because there is a significant amount of approximate information between adjacent frames. 
+            Therefore, the question arises: how can we design a video depth estimation model that takes advantage of the known information between adjacent frames to enhance temporal consistency?
+            <br>
+            We think these are all interesting questions. If you have any questions or wish to further discuss, please feel free to contact us at <b>zhihengl0528@connect.hku.hk</b>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- Begin BibTex -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+<pre><code>@article{liu2024depthlab,
+  author       = {Zhiheng Liu and Ka Leong Cheng and Qiuyu Wang and Shuzhe Wang and Hao Ouyang and Bin Tan and Kai Zhu and Yujun Shen and Qifeng Chen and Ping Luo},
+  title        = {DepthLab: From Partial to Complete},
+  journal      = {CoRR},
+  volume       = {abs/xxxx.xxxxx},
+  year         = {2024},
+}</code></pre>
+  </div>
+</section>
+<!-- End BibTex -->
+
+
+<!-- Begin Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- End Footer -->
+
+
+<script>
+bulmaCarousel.attach('#results-carousel1', {
+    slidesToScroll: 1,
+    slidesToShow: 2,
+    infinite: true,
+    autoplay: false,
+});
+bulmaCarousel.attach('#results-carousel2', {
+    slidesToScroll: 1,
+    slidesToShow: 2,
+    infinite: true,
+    autoplay: false,
+});
+bulmaCarousel.attach('#results-carousel3', {
+    slidesToScroll: 1,
+    slidesToShow: 1,
+    infinite: true,
+    autoplay: false,
+});
+</script>
+
+</body>
+</html>
+ 
