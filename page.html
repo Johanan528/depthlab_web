@@ -4,7 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DepthLab</title>
-
+  <style>
+      #table-of-contents {
+          transition: max-height 0.3s ease-out;
+          overflow: hidden;
+      }
+      #toggle-button {
+          margin: 10px;
+          cursor: pointer;
+      }
+  </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -53,20 +62,19 @@
   </style>
 </head>
 <body>
-<div class="container is-max-desktop">
-  <div id="table-of-contents">
-    <h3 class="title is-3 has-text-weight-bold">Contents</h3>
-    <ul>
-      <li><a href="#Video">Video Introduction</a></li>
-      <li><a href="#Abstract">Abstract</a></li>
-      <li><a href="#method">Method</a></li>
-      <li><a href="#Comparison">Comparison</a></li>
-      <li><a href="#downstream-tasks">Downstream Tasks</a></li>
-      <li><a href="#Discussion on Future Work">Discussion on Future Work</a></li>
-      <li><a href="#BibTeX">BibTeX</a></li>
-    </ul>
-  </div>
-</div>
+<button id="toggle-button">Hide Table of Contents</button>
+    <div id="table-of-contents">
+        <h3 class="title is-3 has-text-weight-bold">Contents</h3>
+        <ul>
+            <li><a href="#Video">Video Introduction</a></li>
+            <li><a href="#Abstract">Abstract</a></li>
+            <li><a href="#method">Method</a></li>
+            <li><a href="#Comparison">Comparison</a></li>
+            <li><a href="#downstream-tasks">Downstream Tasks</a></li>
+            <li><a href="#Discussion on Future Work">Discussion on Future Work</a></li>
+            <li><a href="#BibTeX">BibTeX</a></li>
+        </ul>
+    </div>
 <!-- Begin title and authors -->  
 <section class="hero">
   <div class="hero-body">
@@ -585,7 +593,24 @@ corresponding positions in the right-side visualizations of the depth maps. Othe
 </footer>
 <!-- End Footer -->
 
+<script>
+        document.getElementById('toggle-button').addEventListener('click', function () {
+            const toc = document.getElementById('table-of-contents');
+            if (toc.style.maxHeight) {
+                toc.style.maxHeight = null;
+                this.innerText = 'Show Table of Contents';
+            } else {
+                toc.style.maxHeight = toc.scrollHeight + 'px';
+                this.innerText = 'Hide Table of Contents';
+            }
+        });
 
+        // Initialize the max-height to show contents initially
+        window.addEventListener('load', function () {
+            const toc = document.getElementById('table-of-contents');
+            toc.style.maxHeight = toc.scrollHeight + 'px';
+        });
+</script>
 <script>
 bulmaCarousel.attach('#results-carousel1', {
     slidesToScroll: 1,
