@@ -4,15 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DepthLab</title>
-  <style>
-      #table-of-contents {
-          transition: max-height 0.3s ease-out;
-          overflow: hidden;
-      }
-      #toggle-button {
-          margin: 10px;
-          cursor: pointer;
-      }
+ <style>
+    #table-of-contents {
+      transition: max-height 0.3s ease-out;
+      overflow: hidden;
+      max-height: 0; /* 默认隐藏 */
+    }
+
+    #toggle-button {
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    #table-of-contents.show {
+      max-height: 600px; /* 或者根据内容高度指定一个最大值 */
+    }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script>
@@ -610,7 +616,7 @@ corresponding positions in the right-side visualizations of the depth maps. Othe
             const toc = document.getElementById('table-of-contents');
             toc.style.maxHeight = toc.scrollHeight + 'px';
         });
-</script>
+    </script>
 <script>
 bulmaCarousel.attach('#results-carousel1', {
     slidesToScroll: 1,
